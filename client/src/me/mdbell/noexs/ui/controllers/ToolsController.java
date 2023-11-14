@@ -18,7 +18,9 @@ import me.mdbell.noexs.ui.menus.MemoryInfoContextMenu;
 import me.mdbell.noexs.ui.models.MemoryInfoTableModel;
 import me.mdbell.util.HexUtils;
 
+import java.net.URL;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -65,14 +67,14 @@ public class ToolsController implements IController {
         }
     }, addr -> {
         Debugger debugger = mc.getDebugger();
-        if(!debugger.connected()) {
+        if (!debugger.connected()) {
             return 0;
         }
         return debugger.peek64(addr);
     });
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle bundle) {
         memoryInfoList = FXCollections.observableArrayList();
 
         for (TableColumn c : memInfoTable.getColumns()) {
@@ -107,7 +109,7 @@ public class ToolsController implements IController {
             displayTitleId(mc.getDebugger().getTitleId(newValue));
         });
 
-        MemoryInfoContextMenu cm = new MemoryInfoContextMenu(() -> mc, memInfoTable);
+        MemoryInfoContextMenu cm = new MemoryInfoContextMenu(bundle, () -> mc, memInfoTable);
         memInfoTable.contextMenuProperty().setValue(cm);
     }
 
@@ -217,7 +219,7 @@ public class ToolsController implements IController {
         boolean heap = false;
         for (MemoryInfo m : info) {
             String name = "-";
-            if(m.getType() == MemoryType.HEAP && !heap) {
+            if (m.getType() == MemoryType.HEAP && !heap) {
                 heap = true;
                 name = "heap";
             }
@@ -242,7 +244,7 @@ public class ToolsController implements IController {
                 }
                 mod++;
             }
-            if(!name.equals("-")) {
+            if (!name.equals("-")) {
                 vars.put(name, m.getAddress());
             }
             if (m.getType() != MemoryType.UNMAPPED) {
@@ -251,7 +253,7 @@ public class ToolsController implements IController {
         }
     }
 
-    public ExpressionEvaluator getEvaluator(){
+    public ExpressionEvaluator getEvaluator() {
         return evaluator;
     }
 

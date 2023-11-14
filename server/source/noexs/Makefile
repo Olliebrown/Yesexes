@@ -117,7 +117,9 @@ all: $(BUILD)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-
+	@$(DEVKITPRO)/tools/bin/elf2kip $(TARGET).elf $(TARGET).json $(TARGET).kip1
+	@echo built ... $(TARGET).kip1
+	
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...

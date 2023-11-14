@@ -18,15 +18,18 @@ import me.mdbell.noexs.core.Debugger;
 import me.mdbell.noexs.ui.models.DataType;
 import me.mdbell.noexs.ui.models.WatchlistModel;
 import me.mdbell.util.HexUtils;
+import me.mdbell.util.LocalizedStringConverter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.TimerTask;
 import java.util.concurrent.Semaphore;
 
@@ -50,8 +53,8 @@ public class WatchlistController implements IController {
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle bundle) {
         updateCol.setCellValueFactory(param -> param.getValue().updateProperty());
         lockedCol.setCellValueFactory(param -> param.getValue().lockedProperty());
         typeCol.setCellValueFactory(param -> param.getValue().typeProperty());
@@ -64,6 +67,7 @@ public class WatchlistController implements IController {
         typeCol.setCellFactory(param -> new ComboBoxTableCell<>(DataType.values()) {
             {
                 setItem(DataType.INT);
+                setConverter(new LocalizedStringConverter<>(() -> bundle));
             }
         });
         addrCol.setCellFactory(TextFieldTableCell.forTableColumn());

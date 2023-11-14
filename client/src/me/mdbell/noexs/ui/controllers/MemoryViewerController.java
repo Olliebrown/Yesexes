@@ -14,13 +14,12 @@ import me.mdbell.noexs.core.MemoryInfo;
 import me.mdbell.noexs.ui.Settings;
 import me.mdbell.noexs.ui.models.DataType;
 import me.mdbell.noexs.ui.models.MemoryViewerTableModel;
-import me.mdbell.util.HexUtils;
-import me.mdbell.util.IPatternMatcher;
-import me.mdbell.util.PatternCompiler;
-import me.mdbell.util.PatternTokenizer;
+import me.mdbell.util.*;
 
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ResourceBundle;
 import java.util.TimerTask;
 import java.util.function.Function;
 
@@ -100,8 +99,8 @@ public class MemoryViewerController implements IController {
     private ObservableList<MemoryViewerTableModel> memoryList;
     private long lastAddress = 0;
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle bundle) {
         //setup the memview table
         memViewTable.getSelectionModel().setCellSelectionEnabled(true);
         memoryList = FXCollections.observableArrayList();
@@ -154,6 +153,7 @@ public class MemoryViewerController implements IController {
             }
         });
 
+        pokeType.setConverter(new LocalizedStringConverter<>(() -> bundle));
         pokeType.getItems().addAll(DataType.values());
         pokeType.setValue(DataType.INT);
 
