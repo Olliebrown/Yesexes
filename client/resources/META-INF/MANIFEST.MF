@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: me.mdbell.noexs.ui.NoexsApplication
+Main-Class: me.olliebrown.yesexs.ui.YesexsApplication
 

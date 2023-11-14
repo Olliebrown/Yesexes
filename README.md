@@ -1,7 +1,7 @@
-# Noexes
+# Yesexs
 
 A multi-platform graphical remote debugger for the Nintendo Switch.
-(note, this is the original README from mdbell)
+(note, this is mostly the original README from mdbell and is out of date)
 
 ## Quick Start Guide
 
@@ -16,26 +16,26 @@ Visit out [releases](/releases) page, and download the [latest](/releases/latest
 
 ### Copying Files
 
-Copy ```noexs.kip1``` to the root of your switch sd card.
+Copy ```yesexs.kip1``` to the root of your switch sd card.
 
 ### Editing ```hekate_ipl.ini```
 
 Using a text editor open ```hekate_ipl.ini``` (located within the bootloader directory on your switch's sd card) and add the following:
 
 ```
-[Noexes]
+[Yesexs]
 debugmode=1
-kip1=noexs.kip1
+kip1=yesexs.kip1
 ```
 
-And that's it switch sided! Now just select "Noexes" when booting using hekate to launch HOS with noexes running.
+And that's it switch sided! Now just select "Yesexs" when booting using hekate to launch HOS with yesexs running.
 
 ### Running the Client
 
-On most operating systems all you need to do is run the jar file from the release as you would any other programs. If you're having trouble try running the following command (within the directory where you extracted Noexes):
+On most operating systems all you need to do is run the jar file from the release as you would any other programs. If you're having trouble try running the following command (within the directory where you extracted Yesexs):
 
 ```
-java -jar JNoexsClient.jar
+java -jar JYesexsClient.jar
 ```
 
 If you still have problems please double check that you're running at least Java 10 (you can verify this by using the command ``java -version``). If you are feel free to open an issue and I'll try to get back to you ASAP!
@@ -57,7 +57,7 @@ If you still have problems please double check that you're running at least Java
 ```
 # load devkitpro env
 # source /opt/devkitpro/switchvars.sh
-cd ./server/source/noexs
+cd ./server/source/yesexs
 make
 ```
 

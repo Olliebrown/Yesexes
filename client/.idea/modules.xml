@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/JNoexsClient.iml" filepath="$PROJECT_DIR$/JNoexsClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JYesexsClient.iml" filepath="$PROJECT_DIR$/JYesexsClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/modules/Utils/Utils.iml" filepath="$PROJECT_DIR$/modules/Utils/Utils.iml" />
     </modules>
   </component>
