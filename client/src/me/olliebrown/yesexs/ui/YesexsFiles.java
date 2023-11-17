@@ -13,13 +13,17 @@ public class YesexsFiles {
 
     static{
         if(!tmp.exists()) {
-            tmp.mkdirs();
+            if(!tmp.mkdirs()) {
+                System.err.println("Failed to create temporary directory");
+            }
         }
     }
 
     public static File createTempFile(String ext) throws IOException {
-        File res = new File(tmp, "" + System.currentTimeMillis() + "." + ext);
-        res.createNewFile();
+        File res = new File(tmp, System.currentTimeMillis() + "." + ext);
+        if (!res.createNewFile()) {
+            System.out.println("Temporary file already exists");
+        }
         return res;
     }
 
