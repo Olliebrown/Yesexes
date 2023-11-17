@@ -36,28 +36,6 @@ public class MemoryInfoContextMenu extends ContextMenu {
             mc.get().search().setStart(model.getAddr());
         });
 
-        mainsearchBoth.setOnAction(event -> {
-            MemoryInfoTableModel model = memInfoTable.getSelectionModel().getSelectedItem();
-            if (model == null) {
-                return;
-            }
-            mc.get().search().mainsetSearchRange(model.getAddr(), model.getEnd());
-        });
-        mainsearchStart.setOnAction(event -> {
-            MemoryInfoTableModel model = memInfoTable.getSelectionModel().getSelectedItem();
-            if (model == null) {
-                return;
-            }
-            mc.get().search().mainsetStart(model.getAddr());
-        });
-        mainsearchEnd.setOnAction(event -> {
-            MemoryInfoTableModel model = memInfoTable.getSelectionModel().getSelectedItem();
-            if (model == null) {
-                return;
-            }
-            mc.get().search().mainsetEnd(model.getEnd());
-        });
-
         ptrMain.setOnAction(event -> {
             MemoryInfoTableModel model = memInfoTable.getSelectionModel().getSelectedItem();
             if (model == null) {

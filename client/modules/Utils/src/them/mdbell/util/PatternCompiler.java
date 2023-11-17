@@ -2,6 +2,8 @@ package them.mdbell.util;
 
 import org.objectweb.asm.*;
 
+import java.lang.reflect.InvocationTargetException;
+
 
 public class PatternCompiler{
 
@@ -158,10 +160,8 @@ public class PatternCompiler{
         public IPatternMatcher load(String name, byte[] bytes) {
             Class<?> clazz = defineClass(name, bytes, 0, bytes.length);
             try {
-                return (IPatternMatcher) clazz.newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+                return (IPatternMatcher) clazz.getConstructor().newInstance();
+            } catch (ReflectiveOperationException e) {
                 e.printStackTrace();
             }
             return null;
