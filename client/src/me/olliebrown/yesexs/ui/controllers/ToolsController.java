@@ -7,7 +7,6 @@ import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import them.mdbell.javafx.control.FormattedTableCell;
 import me.olliebrown.yesexs.core.Debugger;
@@ -78,19 +77,13 @@ public class ToolsController implements IController {
     public void initialize(URL url, ResourceBundle bundle) {
         memoryInfoList = FXCollections.observableArrayList();
 
-        for (TableColumn c : memInfoTable.getColumns()) {
+        for (TableColumn<?,?> c : memInfoTable.getColumns()) {
             c.setReorderable(false);
         }
         memInfoTable.setItems(new SortedList<>(memoryInfoList, (info1, info2) -> {
             long addr1 = info1.getAddr();
             long addr2 = info2.getAddr();
-            if (addr1 < addr2) {
-                return -1;
-            }
-            if (addr1 > addr2) {
-                return 1;
-            }
-            return 0;
+            return Long.compare(addr1, addr2);
         }));
 
         memInfoName.setCellValueFactory(param -> param.getValue().nameProperty());
@@ -229,19 +222,12 @@ public class ToolsController implements IController {
                     name = "main";
                 }
                 if (moduleCount > 1) {
-                    switch (mod) {
-                        case 0:
-                            name = "rtld";
-                            break;
-                        case 1:
-                            name = "main";
-                            break;
-                        case 2:
-                            name = "sdk";
-                            break;
-                        default:
-                            name = "subsdk" + (mod - 2);
-                    }
+                    name = switch (mod) {
+                        case 0 -> "rtld";
+                        case 1 -> "main";
+                        case 2 -> "sdk";
+                        default -> "subsdk" + (mod - 2);
+                    };
                 }
                 mod++;
             }
