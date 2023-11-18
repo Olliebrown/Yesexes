@@ -11,7 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import them.mdbell.javafx.control.HexSpinner;
 import them.mdbell.javafx.control.SpinnerTableCell;
 import me.olliebrown.yesexs.core.Debugger;
@@ -45,7 +45,7 @@ public class WatchlistController implements IController {
     public TableColumn<WatchlistModel, DataType> typeCol;
     public TableColumn<WatchlistModel, Long> valueCol;
     @FXML
-    AnchorPane watchlistTabPage;
+    VBox watchlistTabPage;
 
     private MainController mc;
 

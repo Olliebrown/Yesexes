@@ -28,19 +28,28 @@ public class YesexsApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(("views/Main.fxml")));
-        //TODO not hardcode the locale
-        loader.setResources(PropertyResourceBundle.getBundle("bundles.Yesexs", Locale.ENGLISH));
-        Parent root = loader.load();
-        stage.setResizable(true);
-        stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
-        MainController c = loader.getController();
-        c.setStage(stage);
-        c.setTitle(null);
-        stage.setOnHidden(v ->{
-            c.stop();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("views/Main.fxml"));
+            //TODO not hardcode the locale
+            loader.setResources(PropertyResourceBundle.getBundle("bundles.Yesexs", Locale.ENGLISH));
+            Parent root = loader.load();
+            stage.setResizable(true);
+            stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
+            MainController c = loader.getController();
+            c.setStage(stage);
+            c.setTitle(null);
+            stage.setOnHidden(v -> {
+                c.stop();
+                Platform.exit();
+            });
+            stage.show();
+            stage.sizeToScene();
+            stage.setMinWidth(stage.getWidth());
+            stage.setMinHeight(stage.getHeight());
+        } catch (Exception e) {
+            System.out.println("Exception on FXMLLoader.load()");
+            System.out.println(e.getMessage());
             Platform.exit();
-        });
-        stage.show();
+        }
     }
 }

@@ -9,7 +9,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import them.mdbell.javafx.control.FormattedLabel;
 import me.olliebrown.yesexs.core.Debugger;
 import me.olliebrown.yesexs.core.DebuggerStatus;
 import me.olliebrown.yesexs.core.IConnection;
@@ -32,7 +31,6 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
-
 
 public class MainController implements NetworkConstants, IController {
 
@@ -71,6 +69,9 @@ public class MainController implements NetworkConstants, IController {
     @FXML
     WatchlistController watchlistTabPageController;
 
+    @FXML
+    PokerController pokerTabPageController;
+
     private final List<IController> controllers = new LinkedList<>();
 
     private final DebuggerConnectionService connectionService = new DebuggerConnectionService();
@@ -100,6 +101,7 @@ public class MainController implements NetworkConstants, IController {
         controllers.add(searchTabPageController);
         controllers.add(pointerTabPageController);
         controllers.add(watchlistTabPageController);
+        controllers.add(pokerTabPageController);
 
         fire(c -> c.setMainController(this));
         fire(IController::onDisconnect);
@@ -466,6 +468,10 @@ public class MainController implements NetworkConstants, IController {
 
     public WatchlistController watch() {
         return watchlistTabPageController;
+    }
+
+    public PokerController poke() {
+        return pokerTabPageController;
     }
 
     public Stage getStage() {

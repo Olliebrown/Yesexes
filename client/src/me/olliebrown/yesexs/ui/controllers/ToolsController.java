@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -22,7 +21,6 @@ import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
-
 
 public class ToolsController implements IController {
 
@@ -195,9 +193,7 @@ public class ToolsController implements IController {
     }
 
     public void displayTitleId(long titleId) {
-        Platform.runLater(() -> {
-            toolsTitleId.setText("Title Id:" + (titleId == -1 ? "N/A" : HexUtils.formatTitleId(titleId)));
-        });
+        Platform.runLater(() -> toolsTitleId.setText("Title Id:" + (titleId == -1 ? "N/A" : HexUtils.formatTitleId(titleId))));
     }
 
     public void updateMemoryInfo(MemoryInfo[] info) {
@@ -244,7 +240,7 @@ public class ToolsController implements IController {
         return evaluator;
     }
 
-    public void onParse(ActionEvent event) {
+    public void onParse() {
         try {
             String str = expression.getText();
             expressionResult.setText(HexUtils.formatAddress(evaluator.eval(str)));

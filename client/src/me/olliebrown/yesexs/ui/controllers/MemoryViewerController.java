@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import them.mdbell.javafx.control.AddressSpinner;
 import them.mdbell.javafx.control.FormattedTableCell;
 import them.mdbell.javafx.control.HexSpinner;
@@ -91,7 +91,7 @@ public class MemoryViewerController implements IController {
     HexSpinner pokeValue;
 
     @FXML
-    AnchorPane memViewTabPage;
+    HBox memViewTabPage;
 
     @FXML
     CheckBox endianCheckbox;

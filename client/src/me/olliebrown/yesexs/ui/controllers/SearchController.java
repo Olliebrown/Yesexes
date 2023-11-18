@@ -7,7 +7,7 @@ import javafx.concurrent.Service;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import them.mdbell.javafx.control.AddressSpinner;
 import them.mdbell.javafx.control.FormattedLabel;
 import them.mdbell.javafx.control.FormattedTableCell;
@@ -58,7 +58,7 @@ public class SearchController implements IController {
     HexSpinner knownValue;
 
     @FXML
-    AnchorPane searchTabPage;
+    HBox searchTabPage;
 
     @FXML
     TableView<SearchValueModel> searchResults;
