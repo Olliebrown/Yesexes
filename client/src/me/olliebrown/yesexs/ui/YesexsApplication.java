@@ -32,7 +32,7 @@ public class YesexsApplication extends Application {
         //TODO not hardcode the locale
         loader.setResources(PropertyResourceBundle.getBundle("bundles.Yesexs", Locale.ENGLISH));
         Parent root = loader.load();
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.setScene(new Scene(root, stage.getWidth(), stage.getHeight()));
         MainController c = loader.getController();
         c.setStage(stage);

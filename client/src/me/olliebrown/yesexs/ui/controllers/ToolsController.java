@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import them.mdbell.javafx.control.FormattedTableCell;
 import me.olliebrown.yesexs.core.Debugger;
 import me.olliebrown.yesexs.core.MemoryInfo;
@@ -46,7 +47,7 @@ public class ToolsController implements IController {
     TableColumn<MemoryInfoTableModel, Number> memInfoPerm;
 
     @FXML
-    AnchorPane toolsTabPage;
+    VBox toolsTabPage;
 
     @FXML
     Label toolsTitleId;
