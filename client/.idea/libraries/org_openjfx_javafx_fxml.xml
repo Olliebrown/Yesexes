@@ -1,0 +1,26 @@
+<component name="libraryTable">
+  <library name="org.openjfx:javafx-fxml" type="repository">
+    <properties maven-id="org.openjfx:javafx-fxml:17.0.9-ea+4" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/17.0.9-ea+4/javafx-fxml-17.0.9-ea+4.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/17.0.9-ea+4/javafx-fxml-17.0.9-ea+4-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/17.0.9-ea+4/javafx-controls-17.0.9-ea+4.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/17.0.9-ea+4/javafx-controls-17.0.9-ea+4-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/17.0.9-ea+4/javafx-graphics-17.0.9-ea+4.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/17.0.9-ea+4/javafx-graphics-17.0.9-ea+4-win.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/17.0.9-ea+4/javafx-base-17.0.9-ea+4.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/17.0.9-ea+4/javafx-base-17.0.9-ea+4-win.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/17.0.9-ea+4/javafx-fxml-17.0.9-ea+4-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/17.0.9-ea+4/javafx-fxml-17.0.9-ea+4-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/17.0.9-ea+4/javafx-controls-17.0.9-ea+4-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/17.0.9-ea+4/javafx-controls-17.0.9-ea+4-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/17.0.9-ea+4/javafx-graphics-17.0.9-ea+4-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/17.0.9-ea+4/javafx-graphics-17.0.9-ea+4-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/17.0.9-ea+4/javafx-base-17.0.9-ea+4-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/17.0.9-ea+4/javafx-base-17.0.9-ea+4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

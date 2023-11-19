@@ -19,6 +19,16 @@ public class HexSpinner extends Spinner<Long> {
         getEditor().setText(getValueAsString());
     }
 
+    public void setValueFromFloat(float value) {
+        getValueFactory().setValue((long)Float.floatToIntBits(value));
+        setSize(4);
+    }
+
+    public void setValueFromFloat(double value) {
+        getValueFactory().setValue(Double.doubleToLongBits(value));
+        setSize(8);
+    }
+
     public String getValueAsString(){
         return getValueFactory().getConverter().toString(getValue());
     }
@@ -33,7 +43,7 @@ public class HexSpinner extends Spinner<Long> {
             setConverter(new StringConverter<Long>() {
                 @Override
                 public String toString(Long value) {
-                    return HexUtils.pad('0', size, Long.toUnsignedString(value, 16).toUpperCase());
+                    return "0x" + HexUtils.pad('0', size, Long.toUnsignedString(value, 16).toUpperCase());
                 }
 
                 @Override
@@ -45,8 +55,6 @@ public class HexSpinner extends Spinner<Long> {
                     }
                 }
             });
-
-
         }
 
         @Override

@@ -76,9 +76,11 @@ public class Debugger implements Commands, Closeable {
             case SHORT:
                 poke16(addr, (int) value);
                 break;
+            case FLOAT:
             case INT:
                 poke32(addr, (int) value);
                 break;
+            case DOUBLE:
             case LONG:
                 poke64(addr, value);
                 break;

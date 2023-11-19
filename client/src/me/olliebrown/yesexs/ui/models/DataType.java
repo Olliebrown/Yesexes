@@ -6,10 +6,14 @@ public enum DataType implements ILocalized {
     BYTE("search.data_types.byte", 1),
     SHORT("search.data_types.short", 2),
     INT("search.data_types.int", 4),
-    LONG("search.data_types.long", 8);
+    LONG("search.data_types.long", 8),
+    FLOAT("search.data_types.float", 4),
+    DOUBLE("search.data_types.double", 8),
+    VECTOR("search.data_types.vector", 12),
+    MATRIX("search.data_types.matrix", 48);
 
-    String key;
-    int bytes;
+    final String key;
+    final int bytes;
 
     DataType(String key, int bytes) {
         this.key = key;

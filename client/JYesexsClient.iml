@@ -10,9 +10,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Utils" exported="" />
     <orderEntry type="library" name="com.google.code.gson:gson:2.8.5" level="project" />
-    <orderEntry type="library" exported="" name="org.openjfx:javafx-graphics:21.0.1" level="project" />
-    <orderEntry type="library" exported="" name="org.openjfx:javafx-base:21.0.1" level="project" />
-    <orderEntry type="library" exported="" name="org.openjfx:javafx-controls:21.0.1" level="project" />
-    <orderEntry type="library" exported="" name="org.openjfx:javafx-fxml:21.0.1" level="project" />
+    <orderEntry type="library" exported="" name="org.openjfx:javafx-fxml" level="project" />
+    <orderEntry type="library" exported="" name="org.controlsfx:controlsfx" level="project" />
   </component>
 </module>
