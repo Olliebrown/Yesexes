@@ -3,8 +3,8 @@ package me.olliebrown.yesexs.ui.services;
 import me.olliebrown.yesexs.dump.DumpRegion;
 import me.olliebrown.yesexs.ui.YesexsFiles;
 import me.olliebrown.yesexs.dump.MemoryDump;
-import me.olliebrown.yesexs.ui.models.DataType;
 import me.olliebrown.yesexs.ui.models.SearchType;
+import them.mdbell.util.MemValueType;
 
 import java.io.Closeable;
 import java.io.File;
@@ -18,7 +18,7 @@ public final class SearchResult implements Closeable {
     private File location;
     List<Long> addresses;
     List<DumpRegion> regions;
-    DataType dataType;
+    MemValueType dataType;
 
     SearchType type;
 
@@ -44,7 +44,7 @@ public final class SearchResult implements Closeable {
         return start;
     }
 
-    public DataType getDataType(){
+    public MemValueType getDataType(){
         return dataType;
     }
 

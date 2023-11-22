@@ -15,10 +15,10 @@ import javafx.scene.layout.VBox;
 import them.mdbell.javafx.control.HexSpinner;
 import them.mdbell.javafx.control.SpinnerTableCell;
 import me.olliebrown.yesexs.core.Debugger;
-import me.olliebrown.yesexs.ui.models.DataType;
 import me.olliebrown.yesexs.ui.models.WatchlistModel;
 import them.mdbell.util.HexUtils;
 import them.mdbell.util.LocalizedStringConverter;
+import them.mdbell.util.MemValueType;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,7 +42,7 @@ public class WatchlistController implements IController {
     public TableColumn<WatchlistModel, Boolean> lockedCol;
     public TableColumn<WatchlistModel, String> addrCol;
     public TableColumn<WatchlistModel, String> descCol;
-    public TableColumn<WatchlistModel, DataType> typeCol;
+    public TableColumn<WatchlistModel, MemValueType> typeCol;
     public TableColumn<WatchlistModel, Long> valueCol;
     @FXML
     VBox watchlistTabPage;
@@ -64,9 +64,9 @@ public class WatchlistController implements IController {
 
         updateCol.setCellFactory(param -> new CheckBoxTableCell<>());
         lockedCol.setCellFactory(param -> new CheckBoxTableCell<>());
-        typeCol.setCellFactory(param -> new ComboBoxTableCell<>(DataType.values()) {
+        typeCol.setCellFactory(param -> new ComboBoxTableCell<>(MemValueType.values()) {
             {
-                setItem(DataType.INT);
+                setItem(MemValueType.INT);
                 setConverter(new LocalizedStringConverter<>(() -> bundle));
             }
         });
@@ -161,7 +161,7 @@ public class WatchlistController implements IController {
         boolean locked;
         String addr;
         String desc;
-        DataType type;
+        MemValueType type;
         long value;
 
         protected SerializedWatchlistItem() {

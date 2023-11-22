@@ -6,7 +6,7 @@ public enum ConnectionType implements ILocalized {
 
     USB("main.conn.usb"), NETWORK("main.conn.network");
 
-    private String key;
+    private final String key;
 
     ConnectionType(String key){
         this.key = key;

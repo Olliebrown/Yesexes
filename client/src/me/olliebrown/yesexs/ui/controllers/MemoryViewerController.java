@@ -12,7 +12,6 @@ import them.mdbell.javafx.control.HexSpinner;
 import me.olliebrown.yesexs.core.Debugger;
 import me.olliebrown.yesexs.core.MemoryInfo;
 import me.olliebrown.yesexs.ui.Settings;
-import me.olliebrown.yesexs.ui.models.DataType;
 import me.olliebrown.yesexs.ui.models.MemoryViewerTableModel;
 import them.mdbell.util.*;
 
@@ -85,7 +84,7 @@ public class MemoryViewerController implements IController {
     AddressSpinner memViewAddrBox;
 
     @FXML
-    ComboBox<DataType> pokeType;
+    ComboBox<MemValueType> pokeType;
 
     @FXML
     HexSpinner pokeValue;
@@ -154,8 +153,8 @@ public class MemoryViewerController implements IController {
         });
 
         pokeType.setConverter(new LocalizedStringConverter<>(() -> bundle));
-        pokeType.getItems().addAll(DataType.values());
-        pokeType.setValue(DataType.INT);
+        pokeType.getItems().addAll(MemValueType.values());
+        pokeType.setValue(MemValueType.INT);
 
         pokeType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> pokeValue.setSize(newValue.getSize() * 2));
 

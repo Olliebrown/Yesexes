@@ -8,16 +8,15 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import me.olliebrown.yesexs.core.MemoryInfo;
 import me.olliebrown.yesexs.core.MemoryType;
-import them.mdbell.util.HexUtils;
 
 public class MemoryInfoTableModel {
 
-    private SimpleStringProperty name;
-    private SimpleLongProperty addr;
-    private SimpleLongProperty size;
-    private NumberBinding end;
-    private SimpleObjectProperty<MemoryType> type;
-    private SimpleIntegerProperty access;
+    private final SimpleStringProperty name;
+    private final SimpleLongProperty addr;
+    private final SimpleLongProperty size;
+    private final NumberBinding end;
+    private final SimpleObjectProperty<MemoryType> type;
+    private final SimpleIntegerProperty access;
 
     public MemoryInfoTableModel(MemoryInfo info) {
         this("-", info);

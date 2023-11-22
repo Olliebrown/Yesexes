@@ -10,8 +10,8 @@ import me.olliebrown.yesexs.io.MappedList;
 import me.olliebrown.yesexs.misc.DumpAddressList;
 import me.olliebrown.yesexs.ui.YesexsFiles;
 import me.olliebrown.yesexs.ui.models.ConditionType;
-import me.olliebrown.yesexs.ui.models.DataType;
 import me.olliebrown.yesexs.ui.models.SearchType;
+import them.mdbell.util.MemValueType;
 import them.mdbell.util.NetUtils;
 import them.mdbell.util.Rolling;
 import them.mdbell.util.TimeUtils;
@@ -32,7 +32,7 @@ public class MemorySearchService extends Service<SearchResult> implements IMessa
 
     private DataProvider provider;
 
-    private DataType dataType;
+    private MemValueType dataType;
 
     private SearchType type;
     private ConditionType compareType;
@@ -60,7 +60,7 @@ public class MemorySearchService extends Service<SearchResult> implements IMessa
         prevResult = null;
     }
 
-    public void setDataType(DataType type) {
+    public void setDataType(MemValueType type) {
         switch (type) {
             case BYTE:
                 provider = b -> b.get() & 0xFF;

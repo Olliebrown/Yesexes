@@ -2,20 +2,9 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import org.controlsfx.control.ToggleSwitch?>
-
-<?import them.mdbell.javafx.control.FormattedLabel?>
-<?import them.mdbell.javafx.control.AddressSpinner?>
-<?import them.mdbell.javafx.control.HexSpinner?>
-
-<?import java.lang.Integer?>
-<?import java.lang.Float?>
-<?import java.lang.Double?>
-<?import java.lang.Byte?>
-<?import java.lang.Short?>
+<?import javafx.scene.layout.*?>
+<?import org.controlsfx.control.*?>
+<?import them.mdbell.javafx.control.*?>
 
 <HBox fx:id="searchTabPage" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.olliebrown.yesexs.ui.controllers.SearchController">
     <children>
@@ -55,71 +44,11 @@
 
                             <VBox alignment="TOP_RIGHT" spacing="10" HBox.hgrow="ALWAYS">
                                 <Label text="%search.options.convert.value" />
-                                <VBox fx:id="knownValueSpinnerVBox" alignment="TOP_RIGHT" spacing="5">
-                                    <HexSpinner fx:id="knownValueHex" editable="true" VBox.vgrow="ALWAYS" />
-                                    <Spinner fx:id="knownValueByte" editable="true" VBox.vgrow="ALWAYS">
-                                        <valueFactory>
-                                            <SpinnerValueFactory.IntegerSpinnerValueFactory initialValue="0">
-                                                <min>
-                                                    <Byte fx:constant="MIN_VALUE"/>
-                                                </min>
-                                                <max>
-                                                    <Byte fx:constant="MAX_VALUE"/>
-                                                </max>
-                                            </SpinnerValueFactory.IntegerSpinnerValueFactory>
-                                        </valueFactory>
-                                    </Spinner>
-                                    <Spinner fx:id="knownValueShort" editable="true" VBox.vgrow="ALWAYS">
-                                        <valueFactory>
-                                            <SpinnerValueFactory.IntegerSpinnerValueFactory initialValue="0">
-                                                <min>
-                                                    <Short fx:constant="MIN_VALUE"/>
-                                                </min>
-                                                <max>
-                                                    <Short fx:constant="MAX_VALUE"/>
-                                                </max>
-                                            </SpinnerValueFactory.IntegerSpinnerValueFactory>
-                                        </valueFactory>
-                                    </Spinner>
-                                    <Spinner fx:id="knownValueInteger" editable="true" VBox.vgrow="ALWAYS">
-                                        <valueFactory>
-                                            <SpinnerValueFactory.IntegerSpinnerValueFactory initialValue="0">
-                                                <min>
-                                                    <Integer fx:constant="MIN_VALUE"/>
-                                                </min>
-                                                <max>
-                                                    <Integer fx:constant="MAX_VALUE"/>
-                                                </max>
-                                            </SpinnerValueFactory.IntegerSpinnerValueFactory>
-                                        </valueFactory>
-                                    </Spinner>
-                                    <Spinner fx:id="knownValueFloat" editable="true" VBox.vgrow="ALWAYS">
-                                        <valueFactory>
-                                            <SpinnerValueFactory.DoubleSpinnerValueFactory>
-                                                <min>
-                                                    <Float fx:constant="MIN_VALUE"/>
-                                                </min>
-                                                <max>
-                                                    <Float fx:constant="MAX_VALUE"/>
-                                                </max>
-                                            </SpinnerValueFactory.DoubleSpinnerValueFactory>
-                                        </valueFactory>
-                                    </Spinner>
-                                    <Spinner fx:id="knownValueDouble" editable="true" VBox.vgrow="ALWAYS">
-                                        <valueFactory>
-                                            <SpinnerValueFactory.DoubleSpinnerValueFactory>
-                                                <min>
-                                                    <Double fx:constant="MIN_VALUE"/>
-                                                </min>
-                                                <max>
-                                                    <Double fx:constant="MAX_VALUE"/>
-                                                </max>
-                                            </SpinnerValueFactory.DoubleSpinnerValueFactory>
-                                        </valueFactory>
-                                    </Spinner>
-                                </VBox>
-                                <ToggleSwitch fx:id="decimalToggle" text="%search.options.decimal" VBox.vgrow="NEVER" />
-
+                                <MemValueSpinner fx:id="knownValueHex" editable="true" VBox.vgrow="ALWAYS" />
+                                <HBox alignment="CENTER_RIGHT" spacing="10" VBox.vgrow="NEVER">
+                                    <ToggleSwitch fx:id="decimalToggle" text="%search.options.hexadecimal" VBox.vgrow="NEVER" />
+                                    <Label text="%search.options.decimal" />
+                                </HBox>
                                 <VBox alignment="TOP_RIGHT" spacing="5" VBox.vgrow="ALWAYS">
                                     <FormattedLabel fx:id="conditionLabel" alignment="BOTTOM_RIGHT" contentDisplay="RIGHT" format="%search.options.conditions_format" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="RIGHT" VBox.vgrow="ALWAYS" />
                                 </VBox>

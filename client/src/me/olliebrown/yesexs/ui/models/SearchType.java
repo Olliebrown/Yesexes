@@ -7,7 +7,7 @@ public enum SearchType implements ILocalized {
     PREVIOUS("search.search_types.prev"),
     KNOWN("search.search_types.known"),
     DIFFERENT("search.search_types.diff");
-    String key;
+    final String key;
 
     SearchType(String key) {
         this.key = key;

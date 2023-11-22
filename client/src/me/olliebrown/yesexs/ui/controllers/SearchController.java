@@ -8,8 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-
 import me.olliebrown.yesexs.core.Debugger;
 import me.olliebrown.yesexs.core.MemoryType;
 import me.olliebrown.yesexs.dump.DumpRegionSupplier;
@@ -18,12 +16,10 @@ import me.olliebrown.yesexs.ui.services.MemorySearchService;
 import me.olliebrown.yesexs.ui.services.SearchResult;
 
 import org.controlsfx.control.ToggleSwitch;
-import them.mdbell.javafx.control.AddressSpinner;
-import them.mdbell.javafx.control.FormattedLabel;
-import them.mdbell.javafx.control.FormattedTableCell;
-import them.mdbell.javafx.control.HexSpinner;
+import them.mdbell.javafx.control.*;
 import them.mdbell.util.HexUtils;
 import them.mdbell.util.LocalizedStringConverter;
+import them.mdbell.util.MemValueType;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,10 +37,11 @@ public class SearchController implements IController {
     ComboBox<RangeType> searchType;
 
     @FXML
-    ComboBox<DataType> dataTypeDropdown;
+    ComboBox<MemValueType> dataTypeDropdown;
 
     @FXML
     ComboBox<SearchType> searchConditionTypeDropdown;
+
     @FXML
     ComboBox<ConditionType> searchConditionDropdown;
 
@@ -55,25 +52,7 @@ public class SearchController implements IController {
     AddressSpinner searchEnd;
 
     @FXML
-    VBox knownValueSpinnerVBox;
-
-    @FXML
-    HexSpinner knownValueHex;
-
-    @FXML
-    Spinner<Integer> knownValueByte;
-
-    @FXML
-    Spinner<Integer> knownValueShort;
-
-    @FXML
-    Spinner<Integer> knownValueInteger;
-
-    @FXML
-    Spinner<Double> knownValueFloat;
-
-    @FXML
-    Spinner<Double> knownValueDouble;
+    MemValueSpinner knownValueHex;
 
     @FXML
     ToggleSwitch decimalToggle;
@@ -138,34 +117,15 @@ public class SearchController implements IController {
         });
         searchType.getSelectionModel().select(RangeType.ALL);
 
-        updateKnownValueSpinner();
-        decimalToggle.selectedProperty().addListener((observable, oldValue, newValue) -> updateKnownValueSpinner());
-
-        knownValueHex.valueProperty().addListener((obs, oldV, newV) -> syncKnownValueHex(newV));
-        knownValueByte.valueProperty().addListener((obs, oldV, newV) -> syncKnownValueLong((long)newV));
-        knownValueShort.valueProperty().addListener((obs, oldV, newV) -> syncKnownValueLong((long)newV));
-        knownValueInteger.valueProperty().addListener((obs, oldV, newV) -> syncKnownValueLong((long)newV));
-        knownValueFloat.valueProperty().addListener((obs, oldV, newV) -> syncKnownValueFloat(newV));
-        knownValueDouble.valueProperty().addListener((obs, oldV, newV) -> syncKnownValueFloat(newV));
+        decimalToggle.selectedProperty().addListener((observable, oldValue, newValue) -> knownValueHex.setDecimalBase(newValue));
 
         dataTypeDropdown.setConverter(new LocalizedStringConverter<>(() -> bundle));
-        dataTypeDropdown.getItems().addAll(DataType.values());
-        dataTypeDropdown.getSelectionModel().select(DataType.INT); // Default is 32-bit
+        dataTypeDropdown.getItems().addAll(MemValueType.values());
+        dataTypeDropdown.getSelectionModel().select(MemValueType.INT); // Default is 32-bit
         dataTypeDropdown.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == DataType.DOUBLE || newValue == DataType.FLOAT) {
-                syncKnownValueFloat(knownValueDouble.getValue());
-            } else if (decimalToggle.isSelected()) {
-                syncKnownValueLong(knownValueInteger.getValue());
-            } else {
-                syncKnownValueLong(knownValueHex.getValue());
-            }
-
             updateCondition();
-            updateKnownValueSpinner();
-
-            int size = newValue.getSize() * 2;
-            knownValueHex.setSize(size);
-            pokeValue.setSize(size);
+            knownValueHex.setType(newValue);
+            pokeValue.setSize(newValue.getSize() * 2);
         });
 
         searchConditionTypeDropdown.setConverter(new LocalizedStringConverter<>(() -> bundle));
@@ -175,8 +135,6 @@ public class SearchController implements IController {
             (observable, oldValue, newValue) -> {
                 boolean b = newValue == SearchType.UNKNOWN;
                 knownValueHex.setDisable(b);
-                knownValueFloat.setDisable(b);
-                knownValueInteger.setDisable(b);
                 searchConditionDropdown.setDisable(b);
                 if (b) {
                     searchConditionDropdown.setValue(ConditionType.EQUALS);
@@ -188,7 +146,6 @@ public class SearchController implements IController {
         searchConditionDropdown.setConverter(new LocalizedStringConverter<>(() -> bundle));
         searchConditionDropdown.getItems().addAll(ConditionType.values());
         searchConditionDropdown.getSelectionModel().select(ConditionType.EQUALS);
-
         searchConditionDropdown.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> updateCondition());
 
         knownValueHex.valueProperty().addListener((observable, oldValue, newValue) -> updateCondition());
@@ -248,7 +205,7 @@ public class SearchController implements IController {
     }
 
     private void updateCondition() {
-        String value = knownValueHex.getValueAsString();
+        String value = knownValueHex.getValueAsHexString();
         SearchType type = searchConditionTypeDropdown.getValue();
         ConditionType condition = searchConditionDropdown.getValue();
 
@@ -296,7 +253,7 @@ public class SearchController implements IController {
 
         List<SearchValueModel> models = searchResults.getSelectionModel().getSelectedItems();
         long value = pokeValue.getValue();
-        DataType t = dataTypeDropdown.getSelectionModel().getSelectedItem();
+        MemValueType t = dataTypeDropdown.getSelectionModel().getSelectedItem();
 
         // TODO: Deal with floats and doubles
 
@@ -335,7 +292,7 @@ public class SearchController implements IController {
             MainController.showMessage(bundle.getString("search.warn.service_running"), Alert.AlertType.WARNING);
             return;
         }
-        DataType dataType = dataTypeDropdown.getValue();
+        MemValueType dataType = dataTypeDropdown.getValue();
         long known = knownValueHex.getValue();
 
         SearchType type = searchConditionTypeDropdown.getValue();
@@ -413,7 +370,7 @@ public class SearchController implements IController {
     }
 
     private void initSearch(SearchType type, ConditionType compareType,
-                            DataType dataType, long known) {
+                            MemValueType dataType, long known) {
         searchService.setType(type);
         searchService.setCompareType(compareType);
         searchService.setDataType(dataType);
@@ -504,90 +461,5 @@ public class SearchController implements IController {
                 return DumpRegionSupplier.createSupplierFromInfo(conn, info -> info.isReadable() && info.getType() == MemoryType.THREAD_LOCAL);
         }
         return null;
-    }
-
-    private void syncKnownValueFloat(double newFloatValue) {
-        if (!blockUpdateEvents) {
-            blockUpdateEvents = true;
-
-            long newLongValue = (long)Math.floor(newFloatValue + 0.5);
-            long newHexValue = switch(dataTypeDropdown.getSelectionModel().getSelectedItem()) {
-                case FLOAT -> (long)Float.floatToIntBits((float)newFloatValue);
-                case DOUBLE -> Double.doubleToLongBits(newFloatValue);
-                default -> (long)Math.floor(newFloatValue + 0.5);
-            };
-            updateKnownValues(newFloatValue, newLongValue, newHexValue);
-
-            blockUpdateEvents = false;
-        }
-    }
-
-    private void syncKnownValueHex(long newHexValue) {
-        if (!blockUpdateEvents) {
-            blockUpdateEvents = true;
-
-            double newFloatValue = switch(dataTypeDropdown.getSelectionModel().getSelectedItem()) {
-                case FLOAT -> (double) Float.intBitsToFloat((int)newHexValue);
-                case DOUBLE -> Double.longBitsToDouble(newHexValue);
-                default -> (double)newHexValue;
-            };
-
-            long newLongValue = switch(dataTypeDropdown.getSelectionModel().getSelectedItem()) {
-                case FLOAT, DOUBLE -> (long)newFloatValue;
-                default -> newHexValue;
-            };
-
-            updateKnownValues(newFloatValue, newLongValue, newHexValue);
-            blockUpdateEvents = false;
-        }
-    }
-
-    private void syncKnownValueLong(long newLongValue) {
-        if (!blockUpdateEvents) {
-            blockUpdateEvents = true;
-            updateKnownValues((double)newLongValue, newLongValue, newLongValue);
-            blockUpdateEvents = false;
-        }
-    }
-
-    private void updateKnownValues(double newFloatValue, long newLongValue, long newHexValue) {
-        knownValueHex.getValueFactory().setValue(newHexValue);
-        knownValueByte.getValueFactory().setValue(
-            (int) Math.max(Byte.MIN_VALUE, Math.min(newLongValue, Byte.MAX_VALUE))
-        );
-        knownValueShort.getValueFactory().setValue(
-            (int) Math.max(Short.MIN_VALUE, Math.min(newLongValue, Short.MAX_VALUE))
-        );
-        knownValueInteger.getValueFactory().setValue(
-            (int) Math.max(Integer.MIN_VALUE, Math.min(newLongValue, Integer.MAX_VALUE))
-        );
-        knownValueFloat.getValueFactory().setValue(
-            Math.max(Float.MIN_VALUE, Math.min(newFloatValue, Float.MAX_VALUE))
-        );
-        knownValueDouble.getValueFactory().setValue(newFloatValue);
-
-        // Log for debugging
-        System.out.println("Hex Value:    " + knownValueHex.getValueAsString());
-        System.out.println("Byte Value:   " + knownValueByte.getValue());
-        System.out.println("Short Value:  " + knownValueShort.getValue());
-        System.out.println("Int Value:    " + knownValueInteger.getValue());
-        System.out.println("Float Value:  " + knownValueFloat.getValue());
-        System.out.println("Double Value: " + knownValueDouble.getValue());
-    }
-
-    private void updateKnownValueSpinner () {
-        ObservableList<Node> children = knownValueSpinnerVBox.getChildren();
-        children.clear();
-        if (!decimalToggle.isSelected()) {
-            children.add(knownValueHex);
-        } else {
-            switch(dataTypeDropdown.getSelectionModel().getSelectedItem()) {
-                case BYTE: children.add(knownValueByte); break;
-                case SHORT: children.add(knownValueShort); break;
-                case INT: case LONG: children.add(knownValueInteger); break;
-                case FLOAT: children.add(knownValueFloat); break;
-                case DOUBLE: children.add(knownValueDouble); break;
-            }
-        }
     }
 }

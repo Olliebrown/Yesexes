@@ -8,7 +8,7 @@ public enum RangeType implements ILocalized {
     HEAP("search.range_types.heap"),
     TLS("search.range_types.thread");
 
-    String key;
+    final String key;
 
     RangeType(String key) {
         this.key = key;

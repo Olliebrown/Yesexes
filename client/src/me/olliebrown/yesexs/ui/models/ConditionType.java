@@ -9,7 +9,8 @@ public enum ConditionType implements ILocalized {
     LESS_THAN_OR_EQUAL("search.cond_types.less_than_or_equal", "<="),
     GREATER_THAN("search.cond_types.greater_than", ">"),
     GREATER_OR_EQUAL("search.cond_types.greater_than_or_equal", ">=");
-    String key, operator;
+    final String key;
+    final String operator;
 
     ConditionType(String key, String operator) {
         this.key = key;

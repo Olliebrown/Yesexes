@@ -1,12 +1,10 @@
 package me.olliebrown.yesexs.ui.models;
 
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import them.mdbell.util.HexUtils;
+import them.mdbell.util.MemValueType;
 
 public class WatchlistModel {
 
@@ -15,7 +13,7 @@ public class WatchlistModel {
     SimpleStringProperty desc = new SimpleStringProperty("-");
     SimpleObjectProperty<String> addr = new SimpleObjectProperty<>(HexUtils.formatAddress(0));
     SimpleObjectProperty<Long> value = new SimpleObjectProperty<>(0L);
-    SimpleObjectProperty<DataType> type = new SimpleObjectProperty<>(DataType.INT);
+    SimpleObjectProperty<MemValueType> type = new SimpleObjectProperty<>(MemValueType.INT);
 
     public WatchlistModel() {
         updateProperty().addListener((observable, oldValue, newValue) -> {
@@ -50,7 +48,7 @@ public class WatchlistModel {
         return value;
     }
 
-    public SimpleObjectProperty<DataType> typeProperty() {
+    public SimpleObjectProperty<MemValueType> typeProperty() {
         return type;
     }
 
@@ -70,11 +68,11 @@ public class WatchlistModel {
         this.locked.set(locked);
     }
 
-    public DataType getType() {
+    public MemValueType getType() {
         return type.get();
     }
 
-    public void setType(DataType t) {
+    public void setType(MemValueType t) {
         type.set(t);
     }
 

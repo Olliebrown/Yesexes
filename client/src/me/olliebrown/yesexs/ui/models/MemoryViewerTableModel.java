@@ -3,10 +3,7 @@ package me.olliebrown.yesexs.ui.models;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.property.SimpleStringProperty;
-import them.mdbell.util.HexUtils;
 
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 public class MemoryViewerTableModel {
@@ -30,23 +27,13 @@ public class MemoryViewerTableModel {
     }
 
     private StringBinding createBinding(int i) {
-        SimpleLongProperty prop;
-        switch(i / 4){
-            case 0:
-                prop = value1;
-                break;
-            case 1:
-                prop = value2;
-                break;
-            case 2:
-                prop = value3;
-                break;
-            case 3:
-                prop = value4;
-                break;
-            default:
-                throw new IllegalArgumentException(String.valueOf(i));
-        }
+        SimpleLongProperty prop = switch (i / 4) {
+            case 0 -> value1;
+            case 1 -> value2;
+            case 2 -> value3;
+            case 3 -> value4;
+            default -> throw new IllegalArgumentException(String.valueOf(i));
+        };
         int rem = i % 4;
         return Bindings.createStringBinding(() -> {
             int j = (prop.intValue() >> (24 - rem * 8)) & 0xFF;

@@ -4,7 +4,7 @@ import me.olliebrown.yesexs.misc.BreakpointFlagBuilder;
 import me.olliebrown.yesexs.misc.BreakpointType;
 import me.olliebrown.yesexs.misc.WatchpointFlagBuilder;
 import me.olliebrown.yesexs.ui.YesexsApplication;
-import me.olliebrown.yesexs.ui.models.DataType;
+import them.mdbell.util.MemValueType;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -70,37 +70,7 @@ public class Debugger implements Commands, Closeable {
         }
     }
 
-    public void pokeArray(DataType type, long addr, int[] values) {
-        switch (type) {
-            case BYTE:
-                for (int value : values) { poke8(addr, value); }
-                break;
-            case SHORT:
-                for (int value : values) { poke16(addr, value); }
-                break;
-            case FLOAT:
-            case INT:
-                for (int value : values) { poke32(addr, value); }
-                break;
-            default:
-                System.err.println("Incompatible type and array for pokeArray()");
-                break;
-        }
-    }
-
-    public void pokeArray(DataType type, long addr, long[] values) {
-        switch (type) {
-            case DOUBLE:
-            case LONG:
-                for (long value : values) { poke64(addr, value); }
-                break;
-            default:
-                System.err.println("Incompatible type and array for pokeArray()");
-                break;
-        }
-    }
-
-    public void poke(DataType type, long addr, long value) {
+    public void poke(MemValueType type, long addr, long value) {
         switch (type) {
             case BYTE:
                 poke8(addr, (int) value);
@@ -572,7 +542,7 @@ public class Debugger implements Commands, Closeable {
         }
     }
 
-    public long peek(DataType type, long addr) {
+    public long peek(MemValueType type, long addr) {
         switch (type) {
             case BYTE:
                 return peek8(addr);

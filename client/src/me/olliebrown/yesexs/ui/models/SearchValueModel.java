@@ -1,16 +1,8 @@
 package me.olliebrown.yesexs.ui.models;
 
-import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableLongValue;
 import javafx.beans.value.ObservableNumberValue;
-import javafx.collections.ObservableList;
-import me.olliebrown.yesexs.ui.services.MemorySearchService;
-import them.mdbell.util.HexUtils;
-
-import java.io.IOException;
 
 public class SearchValueModel {
 
