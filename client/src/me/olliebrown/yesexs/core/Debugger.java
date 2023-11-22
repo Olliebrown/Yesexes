@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+
+import java.util.List;
 import java.util.Arrays;
 import java.util.concurrent.Semaphore;
 
@@ -65,6 +67,36 @@ public class Debugger implements Commands, Closeable {
             return DebuggerStatus.forId(status);
         } finally {
             release();
+        }
+    }
+
+    public void pokeArray(DataType type, long addr, int[] values) {
+        switch (type) {
+            case BYTE:
+                for (int value : values) { poke8(addr, value); }
+                break;
+            case SHORT:
+                for (int value : values) { poke16(addr, value); }
+                break;
+            case FLOAT:
+            case INT:
+                for (int value : values) { poke32(addr, value); }
+                break;
+            default:
+                System.err.println("Incompatible type and array for pokeArray()");
+                break;
+        }
+    }
+
+    public void pokeArray(DataType type, long addr, long[] values) {
+        switch (type) {
+            case DOUBLE:
+            case LONG:
+                for (long value : values) { poke64(addr, value); }
+                break;
+            default:
+                System.err.println("Incompatible type and array for pokeArray()");
+                break;
         }
     }
 

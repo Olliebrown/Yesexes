@@ -33,14 +33,14 @@
                         <Button fx:id="dumpFileButton" mnemonicParsing="false" onAction="#onBrowseDumpFile" text="%pointer.input.browse" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
                         <Button fx:id="searchButton" disable="true" mnemonicParsing="false" onAction="#onSearchAction" text="%pointer.input.search" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
                         <Button fx:id="cancelButton" disable="true" mnemonicParsing="false" onAction="#onCancelAction" text="%pointer.input.cancel" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES" />
-                  <columnConstraints>
-                     <ColumnConstraints maxWidth="1.7976931348623157E308" />
-                     <ColumnConstraints maxWidth="1.7976931348623157E308" />
-                  </columnConstraints>
-                  <rowConstraints>
-                     <RowConstraints maxHeight="1.7976931348623157E308" />
-                     <RowConstraints maxHeight="1.7976931348623157E308" />
-                  </rowConstraints>
+                        <columnConstraints>
+                            <ColumnConstraints maxWidth="1.7976931348623157E308" />
+                            <ColumnConstraints maxWidth="1.7976931348623157E308" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints maxHeight="1.7976931348623157E308" />
+                            <RowConstraints maxHeight="1.7976931348623157E308" />
+                        </rowConstraints>
                     </GridPane>
                 </HBox>
             </content>
@@ -63,7 +63,7 @@
             </content>
         </TitledPane>
     </children>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
 </VBox>

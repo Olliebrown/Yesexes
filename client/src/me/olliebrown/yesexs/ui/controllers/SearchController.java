@@ -9,12 +9,14 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 import me.olliebrown.yesexs.core.Debugger;
 import me.olliebrown.yesexs.core.MemoryType;
 import me.olliebrown.yesexs.dump.DumpRegionSupplier;
 import me.olliebrown.yesexs.ui.models.*;
 import me.olliebrown.yesexs.ui.services.MemorySearchService;
 import me.olliebrown.yesexs.ui.services.SearchResult;
+
 import org.controlsfx.control.ToggleSwitch;
 import them.mdbell.javafx.control.AddressSpinner;
 import them.mdbell.javafx.control.FormattedLabel;
@@ -112,6 +114,7 @@ public class SearchController implements IController {
     private SearchResult result;
 
     private Service<?> runningService = null;
+
     private final MemorySearchService searchService = new MemorySearchService();
 
     private ObservableList<SearchValueModel> resultList;
@@ -275,11 +278,6 @@ public class SearchController implements IController {
         setEnd(end);
     }
 
-//    public void mainsetSearchRange(long start, long end) {
-//        mainsetStart(start);
-//        mainsetEnd(end);
-//    }
-
     public void setStart(long start) {
         searchStart.getValueFactory().setValue(start);
         searchType.setValue(RangeType.RANGE);
@@ -289,16 +287,6 @@ public class SearchController implements IController {
         searchEnd.getValueFactory().setValue(end);
         searchType.setValue(RangeType.RANGE);
     }
-
-//    public void mainsetStart(long start) {
-//        mainStart.getValueFactory().setValue(start);
-//        searchType.setValue(RangeType.RANGE);
-//    }
-//
-//    public void mainsetEnd(long end) {
-//        mainsearchEnd.getValueFactory().setValue(end);
-//        searchType.setValue(RangeType.RANGE);
-//    }
 
     public void poke() {
         if (isServiceRunning()) {

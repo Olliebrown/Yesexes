@@ -6,10 +6,7 @@
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="570.0" minWidth="1020.0"
-            xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="me.olliebrown.yesexs.ui.controllers.MainController">
+<AnchorPane minHeight="570.0" minWidth="1020.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.olliebrown.yesexs.ui.controllers.MainController">
     <children>
         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <TabPane fx:id="tabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
@@ -28,7 +25,7 @@
                 <Tab fx:id="watchlistTab" text="%main.tabs.watchlist">
                     <fx:include fx:id="watchlistTabPage" source="WatchlistTab.fxml" />
                 </Tab>
-                <Tab fx:id="pokerTab" text="%main.tabs.poker" disable="true">
+                <Tab fx:id="pokerTab" text="%main.tabs.poker">
                     <fx:include fx:id="pokerTabPage" source="PokerTab.fxml" />
                 </Tab>
             </TabPane>

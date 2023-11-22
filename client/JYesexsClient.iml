@@ -12,5 +12,6 @@
     <orderEntry type="library" name="com.google.code.gson:gson:2.8.5" level="project" />
     <orderEntry type="library" exported="" name="org.openjfx:javafx-fxml" level="project" />
     <orderEntry type="library" exported="" name="org.controlsfx:controlsfx" level="project" />
+    <orderEntry type="library" name="javax.vecmath" level="project" />
   </component>
 </module>
