@@ -8,11 +8,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import them.mdbell.javafx.control.AddressSpinner;
 import them.mdbell.javafx.control.FormattedTableCell;
-import them.mdbell.javafx.control.HexSpinner;
 import me.olliebrown.yesexs.core.Debugger;
 import me.olliebrown.yesexs.core.MemoryInfo;
 import me.olliebrown.yesexs.ui.Settings;
 import me.olliebrown.yesexs.ui.models.MemoryViewerTableModel;
+import them.mdbell.javafx.control.MemValueSpinner;
 import them.mdbell.util.*;
 
 import java.net.URL;
@@ -87,7 +87,7 @@ public class MemoryViewerController implements IController {
     ComboBox<MemValueType> pokeType;
 
     @FXML
-    HexSpinner pokeValue;
+    MemValueSpinner pokeValue;
 
     @FXML
     HBox memViewTabPage;
@@ -95,12 +95,15 @@ public class MemoryViewerController implements IController {
     @FXML
     CheckBox endianCheckbox;
 
+    @FXML
+    private CheckBox decimalCheckbox;
+
     private ObservableList<MemoryViewerTableModel> memoryList;
     private long lastAddress = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
-        //setup the memview table
+        // set up the memview table
         memViewTable.getSelectionModel().setCellSelectionEnabled(true);
         memoryList = FXCollections.observableArrayList();
         memViewTable.setItems(memoryList);
@@ -156,10 +159,15 @@ public class MemoryViewerController implements IController {
         pokeType.getItems().addAll(MemValueType.values());
         pokeType.setValue(MemValueType.INT);
 
-        pokeType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> pokeValue.setSize(newValue.getSize() * 2));
+        pokeType.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> pokeValue.setType(newValue)
+        );
 
         endianCheckbox.selectedProperty().setValue(Settings.shouldSwapEndian());
         endianCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> dumpToMemoryViewer(lastAddress));
+        decimalCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            pokeValue.setDecimalBase(newValue);
+        });
     }
 
     private long getSelectedAddress() {
@@ -225,7 +233,8 @@ public class MemoryViewerController implements IController {
                 l--;
             }
             TableColumn<MemoryViewerTableModel, Number> column;
-            switch ((int) ((l & 0xF) / 4)) {
+            int colIndex = (int) ((l & 0xF) / 4);
+            switch (colIndex) {
                 case 0:
                     column = memViewValCol1;
                     break;
@@ -322,7 +331,7 @@ public class MemoryViewerController implements IController {
             return;
         }
         String str = patternTextField.getText().trim();
-        if(str.length() == 0) {
+        if(str.isEmpty()) {
             //TODO say invalid pattern
             return;
         }

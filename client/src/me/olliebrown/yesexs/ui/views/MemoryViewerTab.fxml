@@ -20,7 +20,7 @@
             <Separator />
 
             <VBox spacing="10">
-                <HexSpinner fx:id="pokeValue" editable="true" maxWidth="1.7976931348623157E308" />
+                <MemValueSpinner fx:id="pokeValue" editable="true" maxWidth="1.7976931348623157E308" />
                 <HBox spacing="10">
                     <ComboBox fx:id="pokeType" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                     <Button mnemonicParsing="false" onAction="#onPokeAction" text="%memory.poke" />
@@ -42,9 +42,13 @@
                 <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%memory.download" />
                 <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="%memory.upload" />
             </VBox>
-         <Region maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
-
-            <CheckBox fx:id="endianCheckbox" mnemonicParsing="false" text="%memory.swap_endian" />
+            <Region maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+            <HBox spacing="10.0">
+                <children>
+                    <CheckBox fx:id="endianCheckbox" mnemonicParsing="false" text="%memory.swap_endian" />
+                    <CheckBox fx:id="decimalCheckbox" mnemonicParsing="false" text="%memory.decimal_toggle" />
+                </children>
+            </HBox>
         </VBox>
 
         <TableView fx:id="memViewTable" layoutX="196.0" layoutY="11.0" prefHeight="448.0" prefWidth="790.0" HBox.hgrow="ALWAYS">
@@ -80,13 +84,13 @@
         <VBox spacing="10" HBox.hgrow="NEVER">
             <Button mnemonicParsing="false" onAction="#memViewerUpBig" rotate="180.0" text="↓" underline="true" />
             <Button mnemonicParsing="false" onAction="#memViewerUp" text="↑" />
-         <Region maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+            <Region maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
 
             <Button mnemonicParsing="false" onAction="#memViewerDown" text="↓" />
             <Button mnemonicParsing="false" onAction="#memViewerDownBig" text="↓" underline="true" />
         </VBox>
     </children>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
 </HBox>

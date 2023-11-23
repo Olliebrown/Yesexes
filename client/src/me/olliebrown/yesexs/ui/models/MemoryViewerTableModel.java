@@ -3,23 +3,21 @@ package me.olliebrown.yesexs.ui.models;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.value.ObservableNumberValue;
 
 import java.nio.charset.StandardCharsets;
 
 public class MemoryViewerTableModel {
     private final SimpleLongProperty addr;
-    private final SimpleLongProperty value1;
-    private final SimpleLongProperty value2;
-    private final SimpleLongProperty value3;
-    private final SimpleLongProperty value4;
+    private final SimpleLongProperty[] longValues = new SimpleLongProperty[4];
     private final StringBinding[] asciiBindings = new StringBinding[16];
 
     public MemoryViewerTableModel() {
         this.addr = new SimpleLongProperty();
-        this.value1 = new SimpleLongProperty();
-        this.value2 = new SimpleLongProperty();
-        this.value3 = new SimpleLongProperty();
-        this.value4 = new SimpleLongProperty();
+        this.longValues[0] = new SimpleLongProperty();
+        this.longValues[1] = new SimpleLongProperty();
+        this.longValues[2] = new SimpleLongProperty();
+        this.longValues[3] = new SimpleLongProperty();
         for(int i = 0; i < asciiBindings.length; i++) {
             asciiBindings[i] = createBinding(i);
         }
@@ -28,10 +26,10 @@ public class MemoryViewerTableModel {
 
     private StringBinding createBinding(int i) {
         SimpleLongProperty prop = switch (i / 4) {
-            case 0 -> value1;
-            case 1 -> value2;
-            case 2 -> value3;
-            case 3 -> value4;
+            case 0 -> longValues[0];
+            case 1 -> longValues[1];
+            case 2 -> longValues[2];
+            case 3 -> longValues[3];
             default -> throw new IllegalArgumentException(String.valueOf(i));
         };
         int rem = i % 4;
@@ -50,33 +48,33 @@ public class MemoryViewerTableModel {
 
     public void set(long addr, int memVal1, int memVal2, int memVal3, int memVal4) {
         this.addr.set(addr);
-        this.value1.set(memVal1);
-        this.value2.set(memVal2);
-        this.value3.set(memVal3);
-        this.value4.set(memVal4);
+        this.longValues[0].set(memVal1);
+        this.longValues[1].set(memVal2);
+        this.longValues[2].set(memVal3);
+        this.longValues[3].set(memVal4);
     }
 
     public SimpleLongProperty addrProperty(){
         return addr;
     }
 
-    public SimpleLongProperty firstValueProperty(){
-        return value1;
+    public ObservableNumberValue firstValueProperty() {
+        return longValues[0];
     }
 
-    public SimpleLongProperty secondValueProperty(){
-        return value2;
+    public ObservableNumberValue secondValueProperty() {
+        return longValues[1];
     }
 
-    public SimpleLongProperty thirdValueProperty(){
-        return value3;
+    public ObservableNumberValue thirdValueProperty() {
+        return longValues[2];
     }
 
-    public SimpleLongProperty fourthValueProperty(){
-        return value4;
+    public ObservableNumberValue fourthValueProperty() {
+        return longValues[3];
     }
 
-    public StringBinding asciiBinding(int i){
+    public StringBinding asciiBinding(int i) {
         return asciiBindings[i];
     }
 }

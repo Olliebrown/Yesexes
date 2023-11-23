@@ -1,17 +1,17 @@
 package me.olliebrown.yesexs.ui.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import me.olliebrown.yesexs.core.Debugger;
-import me.olliebrown.yesexs.ui.models.DataType;
 import them.mdbell.javafx.control.AddressSpinner;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.List;
+import java.util.TimerTask;
 import javax.vecmath.*;
 
 public class PokerController implements IController {
@@ -30,17 +30,25 @@ public class PokerController implements IController {
     private Spinner<Double> scale;
 
     @FXML
-    private List<Label> matrixLabels ;
+    private GridPane newMatrix;
 
     @FXML
-    private AddressSpinner pokeAddress;
+    private MatrixController newMatrixController;
 
-    private Matrix4f m;
+    @FXML
+    private GridPane readMatrix;
+
+    @FXML
+    private MatrixController readMatrixController;
+
+    @FXML
+    private CheckBox refreshCheckbox;
+
+    @FXML
+    private AddressSpinner matrixAddress;
 
     @Override
     public void initialize(URL url, ResourceBundle bundle) {
-        m = new Matrix4f();
-
         translate.get(0).valueProperty().addListener((obs, oldV, newV) -> updateMatrix());
         translate.get(1).valueProperty().addListener((obs, oldV, newV) -> updateMatrix());
         translate.get(2).valueProperty().addListener((obs, oldV, newV) -> updateMatrix());
@@ -50,23 +58,35 @@ public class PokerController implements IController {
         rotate.get(2).valueProperty().addListener((obs, oldV, newV) -> updateMatrix());
 
         scale.valueProperty().addListener((obs, oldV, newV) -> updateMatrix());
-
         updateMatrix();
     }
 
     @Override
     public void setMainController(MainController c) {
         mc = c;
+        newMatrixController.setMainController(c);
+        readMatrixController.setMainController(c);
+
+        mc.timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (refreshCheckbox.isSelected()) {
+                    mc.runAndWait(() -> peek());
+                }
+            }
+        }, 1, 500);
     }
 
     @Override
     public void onConnect() {
-
+        newMatrixController.onConnect();
+        readMatrixController.onConnect();
     }
 
     @Override
     public void onDisconnect() {
-
+        newMatrixController.onDisconnect();
+        readMatrixController.onDisconnect();
     }
 
     private void updateMatrix () {
@@ -86,33 +106,18 @@ public class PokerController implements IController {
             translate.get(2).getValue().floatValue()
         );
 
-        m.set(rotX, position, scale.getValue().floatValue());
-        updateLabels();
-    }
-
-    private void updateLabels () {
-        float[] v = { m.m00, m.m01, m.m02, m.m03,
-                      m.m10, m.m11, m.m12, m.m13,
-                      m.m20, m.m21, m.m22, m.m23,
-                      m.m30, m.m31, m.m32, m.m33 };
-
-        for (int i = 0; i < 16; i++) {
-            matrixLabels.get(i).setText(String.format("%.2f", v[i]));
-        }
+        newMatrixController.updateMatrix(rotX, position, scale.getValue().floatValue());
     }
 
     public void poke() {
-        float[] v = { m.m00, m.m01, m.m02, m.m03,
-                      m.m10, m.m11, m.m12, m.m13,
-                      m.m20, m.m21, m.m22, m.m23,
-                      m.m30, m.m31, m.m32, m.m33 };
-
-        int[] vi = new int[16];
-        for (int i=0; i<16; i++) {
-            vi[i] = Float.floatToIntBits(v[i]);
+        if (mc.getDebugger().connected()) {
+            newMatrixController.poke(matrixAddress.getValue());
         }
+    }
 
-        Debugger debugger = mc.getDebugger();
-        debugger.pokeArray(DataType.FLOAT, pokeAddress.getValue(), vi);
+    public void peek() {
+        if (mc.getDebugger().connected()) {
+            readMatrixController.peek(matrixAddress.getValue());
+        }
     }
 }

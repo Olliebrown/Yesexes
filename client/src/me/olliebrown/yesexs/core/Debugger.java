@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import java.nio.IntBuffer;
 import java.util.List;
 import java.util.Arrays;
 import java.util.concurrent.Semaphore;
@@ -70,6 +71,49 @@ public class Debugger implements Commands, Closeable {
         }
     }
 
+    public void pokeArray(MemValueType type, long addr, int[] values) {
+        for (long i = 0; i < values.length; i++) {
+            switch (type) {
+                case BYTE: poke8(addr + i, values[(int)i]); break;
+                case SHORT: poke16(addr + (i * 2), values[(int)i]); break;
+
+                case FLOAT:
+                case INT:
+                    poke32(addr + (i * 4), values[(int)i]);
+                    break;
+
+                default:
+                    System.err.println("Incompatible type and array for pokeArray()");
+                    break;
+            }
+        }
+    }
+
+    public void pokeArray(MemValueType type, long addr, long[] values) {
+        switch (type) {
+            case DOUBLE:
+            case LONG:
+                for (long i = 0; i < values.length; i++) {
+                    poke64(addr + (i * 8), values[(int)i]);
+                }
+                break;
+
+            default:
+                System.err.println("Incompatible type and array for pokeArray()");
+                break;
+        }
+    }
+
+    public int[] peekArray(MemValueType type, long addr, int length) {
+        ByteBuffer b = readmem(addr, type.getSize() * length, (byte[])null).order(ByteOrder.LITTLE_ENDIAN);
+        IntBuffer intView = b.asIntBuffer();
+        int[] values = new int[length];
+        for (int i = 0; i < intView.capacity(); i++) {
+            values[i] = intView.get(i);
+        }
+        return values;
+    }
+
     public void poke(MemValueType type, long addr, long value) {
         switch (type) {
             case BYTE:
@@ -105,7 +149,7 @@ public class Debugger implements Commands, Closeable {
         }
     }
 
-    private byte[] peekBuffer = new byte[8];
+    private final byte[] peekBuffer = new byte[8];
 
     public int peek8(long addr) {
         ByteBuffer b = readmem(addr, 1, peekBuffer).order(ByteOrder.LITTLE_ENDIAN);
@@ -131,7 +175,6 @@ public class Debugger implements Commands, Closeable {
     public int peek16(long addr) {
         ByteBuffer b = readmem(addr, 2, peekBuffer).order(ByteOrder.LITTLE_ENDIAN);
         return b.getShort() & 0xFFFF;
-
     }
 
     public void poke32(long addr, int value) {
@@ -548,9 +591,9 @@ public class Debugger implements Commands, Closeable {
                 return peek8(addr);
             case SHORT:
                 return peek16(addr);
-            case INT:
+            case INT: case FLOAT:
                 return peek32(addr);
-            case LONG:
+            case LONG: case DOUBLE:
                 return peek64(addr);
         }
         throw new IllegalArgumentException("Illegal data type:" + type);
